@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: telegram-bot
+    env: python
+    plan: free
+    buildCommand: pip install "python-telegram-bot[webhooks]"
+    startCommand: python bot.py
+    envVars:
+      - key: BOT_TOKEN
+        value: 8394383082:AAETIr-_lw61ltGEz0SfUujgbwILxErGlgw
+      - key: RENDER
+        value: true
+      - key: WEBHOOK_URL
+        value: https://your-bot-name.onrender.com/
+      - key: PORT
+        value: 10000
