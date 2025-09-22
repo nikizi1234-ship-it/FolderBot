@@ -1,16 +1,20 @@
-services:
-  - type: web
-    name: folderbot
-    env: python
-    plan: free
-    buildCommand: pip install "python-telegram-bot[webhooks]"
-    startCommand: python bot.py
-    envVars:
-      - key: BOT_TOKEN
-        value: 8394383082:AAETIr-_lw61ltGEz0SfUujgbwILxErGlgw
-      - key: RENDER
-        value: true
-      - key: WEBHOOK_URL
-        value: https://folderbot-kzqp.onrender.com/
-      - key: PORT
-        value: 10000
+# ЗАПУСК ДЛЯ RENDER
+if os.environ.get('RENDER'):
+    port = int(os.environ.get('PORT', 10000))
+    webhook_url = os.environ.get('WEBHOOK_URL', 'https://folderbot-kzqp.onrender.com/')
+    
+    # Убедимся что URL заканчивается на /
+    if not webhook_url.endswith('/'):
+        webhook_url += '/'
+    
+    logger.info(f"Запуск в режиме Webhook: {webhook_url}, порт: {port}")
+    
+    app.run_webhook(
+        listen="0.0.0.0",
+        port=port,
+        webhook_url=webhook_url + BOT_TOKEN,
+        url_path=BOT_TOKEN
+    )
+else:
+    logger.info("Запуск в режиме Polling (разработка)...")
+    app.run_polling()
