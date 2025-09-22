@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: telegram-bot
+    name: folderbot
     env: python
     plan: free
     buildCommand: pip install "python-telegram-bot[webhooks]"
@@ -11,6 +11,6 @@ services:
       - key: RENDER
         value: true
       - key: WEBHOOK_URL
-        value: https://your-bot-name.onrender.com/
+        value: https://folderbot-kzqp.onrender.com/
       - key: PORT
         value: 10000
